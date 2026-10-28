@@ -22,7 +22,9 @@ main>section{padding:80px 6vw}
 .cta,.more{display:inline-block;margin-top:28px;font-size:16px;border-bottom:1px solid rgba(255,255,255,.5);padding-bottom:2px}
 .cta:hover,.more:hover{color:var(--muted)}
 .visual{background:center/cover no-repeat}
-.product-hero{min-height:70vh}
+.product-hero{min-height:70vh;position:relative}
+.product-hero::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,11,44,.85) 0%,rgba(0,11,44,.55) 50%,rgba(0,11,44,.2) 100%)}
+.product-hero>*{position:relative}
 .wordmark{width:230px;height:auto}
 .wordmark.big{width:min(400px,60vw);margin-bottom:24px}
 .product-row{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start}
