@@ -10,14 +10,15 @@ get(){ echo "  $2"; curl -fsSL "$B/$1" -o "$OUT/$2"; }
 get "d14da8_8432b74955b04714b91a0779dfab751c~mv2.png"  logo-white.png
 get "81af6121f84c41a5b4391d7d37fce12a.png"               instagram.png
 get "d14da8_871e7e5704a94b3095f01279e39597a7~mv2.png"  favicon.png
-# Home
+# Home (the second home section is an autoplay background video on Wix; 720p = 9 MB, 1080p = 20 MB - swap the path if you want 1080p)
+mkdir -p assets/video
+echo "  assets/video/home-loop.mp4"; curl -fsSL "https://video.wixstatic.com/video/d14da8_dc1c8b6c23c84d1a8bf84b5603abd6a4/720p/mp4/file.mp4" -o assets/video/home-loop.mp4 || echo "  (video download failed - rerun later; the section is skipped at build time while the file is missing)"
 get "d14da8_8facba4b2ab24c6e9355beb9724d0a14~mv2.jpg"  home-hero.jpg
-get "d14da8_dc1c8b6c23c84d1a8bf84b5603abd6a4f000.jpg"  home-second.jpg
 # Products
 get "ae1c23_a6e35c6827304afe8c30fac04f93b774~mv2.png"  cm1-wordmark.png
 get "ae1c23_6694b1c15c274942a2f0dab19c538e21~mv2.png"  radius-wordmark.png
-get "ae1c23_e6145c60c41e48168f589bd909cf8f89~mv2.jpg"  products-cm1.jpg
-get "ae1c23_e576433298a842bcad41fdfa4d1369d8~mv2.jpg"  products-radius.jpg
+get "ae1c23_e6145c60c41e48168f589bd909cf8f89~mv2.jpg"  products-cm1.jpg      # "bg_2" set photo (CM-1 column on Wix)
+get "ae1c23_e576433298a842bcad41fdfa4d1369d8~mv2.jpg"  products-radius.jpg   # "RADIUS INTERFACE" (RADIUS column on Wix)
 get "d14da8_2e850572e55747e3af49c66a4c5d79aa~mv2.jpg"  products-bg.jpg
 # CM-1
 get "d14da8_03ad5ee4f761400ba5c8c7e77b2f6f71~mv2.jpg"  cm1-bg.jpg
