@@ -10,6 +10,9 @@ FORM_ENDPOINT = "https://formspree.io/f/YOUR_FORM_ID"   # TODO: replace after cr
 IG_MAIN = "https://www.instagram.com/cineticmotion"
 IG_POSTME = "https://www.instagram.com/post___me/"
 EMAIL = "info@cineticmotion.com"
+GA4_ID = "G-N6YCD6YCRB"
+GA4 = f"""<script async src="https://www.googletagmanager.com/gtag/js?id={GA4_ID}"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){{dataLayer.push(arguments);}}gtag('js',new Date());gtag('config','{GA4_ID}');</script>"""
 
 T = {
  "ko": dict(
@@ -93,6 +96,7 @@ def layout(L, slug, title, body, cur):
 <html lang="{L['lang']}">
 <head>
 <meta charset="utf-8">
+{GA4}
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{E(title)} | Cinetic Motion</title>
 <meta name="description" content="Cinetic Motion – high-tech robotic camera systems (CM-1, RADIUS) for filmmaking.">
@@ -161,7 +165,8 @@ def products(L):
 
 def cm1(L):
     P=L["prefix"]; c=L["cm1"]
-    feats="".join(f'<li><img src="{P}assets/img/cm1-icon-{i+1:02d}.png" alt=""><span>{E(t)}</span></li>' for i,t in enumerate(c["features"]))
+    icon_order=[1,2,3,4,9,10,11,12,5,6,7,8]   # icon sheet order differs from the feature text order
+    feats="".join(f'<li><img src="{P}assets/img/cm1-icon-{icon_order[i]:02d}.png" alt=""><span>{E(t)}</span></li>' for i,t in enumerate(c["features"]))
     spec="".join(f'<tr><th>{E(k)}</th><td>{E(v)}</td></tr>' for k,v in SPEC)
     return f"""
 <section class="hero product-hero" style="background-image:url('{P}assets/img/cm1-bg.jpg')">
