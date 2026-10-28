@@ -6,13 +6,11 @@ import os, html
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = "https://www.cineticmotion.com"
-FORM_ENDPOINT = "https://formspree.io/f/YOUR_FORM_ID"   # TODO: replace after creating a Formspree form
+FORM_ENDPOINT = "https://formspree.io/f/YOUR_FORM_ID"   # TODO: replace after creating a Formspree form (until then the form falls back to mailto:)
+GA_ID = "G-N6YCD6YCRB"   # Google Analytics 4 measurement ID (Admin > Data streams > Web). Set to "" to disable.
 IG_MAIN = "https://www.instagram.com/cineticmotion"
 IG_POSTME = "https://www.instagram.com/post___me/"
 EMAIL = "info@cineticmotion.com"
-GA4_ID = "G-N6YCD6YCRB"
-GA4 = f"""<script async src="https://www.googletagmanager.com/gtag/js?id={GA4_ID}"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){{dataLayer.push(arguments);}}gtag('js',new Date());gtag('config','{GA4_ID}');</script>"""
 
 T = {
  "ko": dict(
@@ -87,6 +85,23 @@ SPEC = [("Spherical Reach","2,200 mm in diameter"),("Vertical Reach","2,700 mm i
 
 E = html.escape
 
+def analytics():
+    """Google Analytics 4 (gtag.js). Emits nothing while GA_ID is still the placeholder."""
+    if not GA_ID or "XXXX" in GA_ID:
+        return "<!-- analytics: set GA_ID in src/build.py and rebuild -->"
+    return f"""<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id={GA_ID}"></script>
+<script>
+window.dataLayer=window.dataLayer||[];function gtag(){{dataLayer.push(arguments);}}
+gtag('js',new Date());gtag('config','{GA_ID}',{{anonymize_ip:true}});
+</script>"""
+
+def video(P):
+    """Autoplay background loop (second home section on Wix). Skipped while assets/video/home-loop.mp4 is missing."""
+    if not os.path.exists(os.path.join(ROOT, "assets/video/home-loop.mp4")):
+        return "<!-- home video: run scripts/fetch-assets.sh to download assets/video/home-loop.mp4 -->"
+    return f"""<section class="full visual"><video autoplay muted loop playsinline preload="metadata" src="{P}assets/video/home-loop.mp4"></video></section>"""
+
 def layout(L, slug, title, body, cur):
     P = L["prefix"]
     other_href = ("en/" if L["lang"]=="ko" else "../") + ("" if slug=="index" else slug + ".html")
@@ -96,7 +111,7 @@ def layout(L, slug, title, body, cur):
 <html lang="{L['lang']}">
 <head>
 <meta charset="utf-8">
-{GA4}
+{analytics()}
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{E(title)} | Cinetic Motion</title>
 <meta name="description" content="Cinetic Motion – high-tech robotic camera systems (CM-1, RADIUS) for filmmaking.">
@@ -137,7 +152,7 @@ def home(L):
     <a class="cta" href="products.html">{E(c['cta'])}</a>
   </div>
 </section>
-<section class="full visual" style="background-image:url('{P}assets/img/home-second.jpg')"></section>
+{video(P)}
 """
 
 def products(L):
@@ -165,7 +180,8 @@ def products(L):
 
 def cm1(L):
     P=L["prefix"]; c=L["cm1"]
-    icon_order=[1,2,3,4,9,10,11,12,5,6,7,8]   # icon sheet order differs from the feature text order
+    # Wix lists the 12 feature captions column-wise but the icon sprite is row-wise; this maps caption i -> icon file.
+    icon_order=[1,2,3,4,9,10,11,12,5,6,7,8]
     feats="".join(f'<li><img src="{P}assets/img/cm1-icon-{icon_order[i]:02d}.png" alt=""><span>{E(t)}</span></li>' for i,t in enumerate(c["features"]))
     spec="".join(f'<tr><th>{E(k)}</th><td>{E(v)}</td></tr>' for k,v in SPEC)
     return f"""
@@ -211,7 +227,7 @@ def form(L, ig_handle, with_subject=True):
     opts="".join(f'<option>{E(s)}</option>' for s in subj)
     subject = f"""<label class="half">{E(f['subject'])} *<select name="subject" required><option value="" disabled selected>{E(f['choose'])}</option>{opts}</select></label>""" if with_subject else f"""<label>{E(f['subject'])}<input name="subject"></label>"""
     return f"""
-<form class="contact-form" action="{FORM_ENDPOINT}" method="POST" data-thanks="{E(f['thanks'])}">
+<form class="contact-form" action="{FORM_ENDPOINT}" method="POST" data-thanks="{E(f['thanks'])}" data-mailto="{EMAIL}">
   <input type="hidden" name="_subject" value="[cineticmotion.com] Contact">
   <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
   <label class="half">{E(f['name'])} *<input name="name" required></label>

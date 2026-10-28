@@ -13,16 +13,28 @@ Static rebuild of the Wix site for GitHub Pages. Korean pages at `/`, English at
 python3 src/build.py
 ```
 
-## Images (one-time)
+## Images / video
+All images (`assets/img/`) and the home background video (`assets/video/home-loop.mp4`, from
+`video.wixstatic.com`) are committed. To re-download them:
 ```bash
-bash scripts/fetch-assets.sh
+bash scripts/fetch-assets.sh   # re-downloads everything; needs ImageMagick for the CM-1 icon crops
+python3 src/build.py           # the video section is emitted only once the mp4 exists
 ```
-Requires normal internet access to `static.wixstatic.com` and ImageMagick (`convert`) for the 12 CM-1 feature icons.
-Commit the downloaded files; the site does not reference Wix at runtime.
+The site does not reference Wix at runtime.
 
 ## Contact form
-Wix Forms does not work on GitHub Pages. Create a free form at https://formspree.io, then replace
-`YOUR_FORM_ID` in `src/build.py` (`FORM_ENDPOINT`) and rebuild. Until then the submit button shows an email prompt.
+GitHub Pages is static hosting: it cannot receive a POST, so a form needs an external endpoint.
+- **Now (no setup):** the submit button opens the visitor's mail client (`mailto:info@cineticmotion.com`)
+  with the filled-in fields as the message body.
+- **Recommended:** create a free form at https://formspree.io (50 submissions/month free), replace
+  `YOUR_FORM_ID` in `src/build.py` (`FORM_ENDPOINT`) and rebuild. Submissions then arrive by email
+  without leaving the page. Alternatives with the same one-line swap: https://web3forms.com, https://getform.io.
+
+## Analytics
+Google Analytics 4 is wired into every page (`analytics()` in `src/build.py`).
+1. In GA4: Admin → Data streams → Web → copy the Measurement ID (`G-…`).
+2. `GA_ID` in `src/build.py` is set to `G-N6YCD6YCRB`; change it and rebuild to use another property (empty string disables the tag).
+Tracked automatically: page views, `outbound_click` (Instagram etc.), `email_click`, `form_submit` (method: mailto/formspree), `form_error`.
 
 ## Deploy
 1. GitHub → Settings → Pages → Source: **GitHub Actions**. The workflow in `.github/workflows/pages.yml` deploys on every push to `main`.
