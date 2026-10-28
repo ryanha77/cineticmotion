@@ -10,9 +10,9 @@ get(){ echo "  $2"; curl -fsSL "$B/$1" -o "$OUT/$2"; }
 get "d14da8_8432b74955b04714b91a0779dfab751c~mv2.png"  logo-white.png
 get "81af6121f84c41a5b4391d7d37fce12a.png"               instagram.png
 get "d14da8_871e7e5704a94b3095f01279e39597a7~mv2.png"  favicon.png
-# Home (the second home section is an autoplay background video on Wix; its poster frame is solid black)
+# Home (the second home section is an autoplay background video on Wix; 720p = 9 MB, 1080p = 20 MB - swap the path if you want 1080p)
 mkdir -p assets/video
-echo "  assets/video/home-loop.mp4"; curl -fsSL "https://video.wixstatic.com/video/d14da8_dc1c8b6c23c84d1a8bf84b5603abd6a4/1080p/mp4/file.mp4" -o assets/video/home-loop.mp4 || echo "  (video download failed - rerun later; the section is skipped at build time while the file is missing)"
+echo "  assets/video/home-loop.mp4"; curl -fsSL "https://video.wixstatic.com/video/d14da8_dc1c8b6c23c84d1a8bf84b5603abd6a4/720p/mp4/file.mp4" -o assets/video/home-loop.mp4 || echo "  (video download failed - rerun later; the section is skipped at build time while the file is missing)"
 get "d14da8_8facba4b2ab24c6e9355beb9724d0a14~mv2.jpg"  home-hero.jpg
 # Products
 get "ae1c23_a6e35c6827304afe8c30fac04f93b774~mv2.png"  cm1-wordmark.png
