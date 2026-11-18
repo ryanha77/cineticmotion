@@ -2,7 +2,7 @@
 """Generates the static site (ko at /, en at /en/) from the content below.
 Run:  python3 src/build.py
 """
-import os, html
+import os, html, json
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = "https://www.cineticmotion.com"
@@ -11,6 +11,43 @@ GA_ID = "G-N6YCD6YCRB"   # Google Analytics 4 measurement ID (Admin > Data strea
 IG_MAIN = "https://www.instagram.com/cineticmotion"
 IG_POSTME = "https://www.instagram.com/post___me/"
 EMAIL = "info@cineticmotion.com"
+NAVER_SITE_VERIFICATION = ""   # Naver Search Advisor > 사이트 관리 > 소유확인 > HTML 태그 값. Empty = tag omitted.
+GOOGLE_SITE_VERIFICATION = ""  # Google Search Console > HTML 태그 값. Empty = tag omitted.
+COMPANY_KO = "주식회사 씨네틱모션"
+COMPANY_EN = "Cinetic Motion Inc."
+ADDRESS = dict(street="테헤란로77길 11-15, 1001호", locality="강남구", region="서울특별시", postal="06159", country="KR")
+
+# Per-page <title> / meta description. Korean copy targets: 로봇촬영, 모션컨트롤, 카메라로봇, 로봇카메라, 촬영자동화, AI촬영, 로봇포토.
+SEO = {
+ "ko": {
+  "index":   ("씨네틱모션 | 로봇촬영·모션컨트롤 카메라로봇 CM-1",
+              "로봇카메라 CM-1과 모션컨트롤 소프트웨어 RADIUS로 촬영자동화를 실현하는 씨네틱모션. 6축 로봇촬영, 반복 정밀 촬영, AI촬영 워크플로우를 제공합니다."),
+  "products":("제품 | 카메라로봇 CM-1 · 모션컨트롤 RADIUS - 씨네틱모션",
+              "영상 제작을 위한 로봇촬영 시스템. 6축 카메라로봇 CM-1과 타임라인 기반 모션컨트롤 소프트웨어 RADIUS를 소개합니다."),
+  "cm-1":    ("CM-1 로봇카메라 | 6축 카메라로봇 촬영자동화 시스템 - 씨네틱모션",
+              "CM-1은 6축 로봇 팔로 팬·틸트·붐·트랙·더치롤과 FIZ 렌즈 제어를 정밀하게 반복하는 전문가용 로봇카메라입니다. 광고·뮤직비디오·제품촬영·로봇포토 촬영자동화에 최적화. 스펙과 견적문의."),
+  "radius":  ("RADIUS 모션컨트롤 소프트웨어 | 로봇촬영 타임라인 제어 - 씨네틱모션",
+              "키프레임·타임라인 방식으로 카메라로봇을 제어하는 모션컨트롤 소프트웨어 RADIUS. 로봇 시뮬레이터, 라이브 모니터링, 프로젝트 관리로 AI촬영 시대의 촬영자동화를 지원합니다."),
+  "contact": ("문의 | 로봇촬영·카메라로봇 견적 및 데모 - 씨네틱모션",
+              "로봇촬영 시스템 CM-1, 모션컨트롤 RADIUS 도입, 렌탈, 데모, 견적 문의. 서울 강남 씨네틱모션."),
+  "contact-post-me": ("POST-ME 문의 | 로봇포토 자동촬영 - 씨네틱모션",
+              "로봇포토 서비스 POST-ME 관련 문의. 카메라로봇 기반 자동 촬영 솔루션에 대해 문의하세요."),
+ },
+ "en": {
+  "index":   ("Cinetic Motion | Robotic Camera & Motion Control for Filmmaking",
+              "Cinetic Motion builds the CM-1 robotic camera system and RADIUS motion control software: 6-axis repeatable camera moves for film, commercials and automated photography."),
+  "products":("Products | CM-1 Camera Robot & RADIUS Motion Control - Cinetic Motion",
+              "Robotic filming system for video professionals: the 6-axis CM-1 camera robot and the timeline-based RADIUS motion control software."),
+  "cm-1":    ("CM-1 Robotic Camera System | 6-Axis Camera Robot - Cinetic Motion",
+              "CM-1 is a professional 6-axis robotic camera that repeats pan, tilt, boom, track, Dutch roll and FIZ lens moves with pixel accuracy. Specs and quote."),
+  "radius":  ("RADIUS Motion Control Software | Timeline Robot Control - Cinetic Motion",
+              "RADIUS controls the camera robot with keyframes and timelines familiar to editors. Robot simulator, live monitoring and project management."),
+  "contact": ("Contact | Robotic Camera Quote & Demo - Cinetic Motion",
+              "Ask about the CM-1 robotic camera system, RADIUS motion control, rental, demo and pricing. Seoul, Korea."),
+  "contact-post-me": ("POST-ME Contact | Automated Robot Photography - Cinetic Motion",
+              "Contact us about POST-ME, the robot-camera based automated photo service."),
+ },
+}
 
 T = {
  "ko": dict(
@@ -85,6 +122,29 @@ SPEC = [("Spherical Reach","2,200 mm in diameter"),("Vertical Reach","2,700 mm i
 
 E = html.escape
 
+def structured_data(L, slug, url, title, desc):
+    ko = L["lang"]=="ko"
+    org = {"@type":"Organization","@id":SITE+"/#organization","name":COMPANY_KO if ko else COMPANY_EN,
+           "alternateName":[COMPANY_EN,"씨네틱모션","시네틱모션","Cinetic Motion"],"url":SITE+"/",
+           "logo":SITE+"/assets/img/logo-white.png","email":EMAIL,"sameAs":[IG_MAIN],
+           "address":{"@type":"PostalAddress","streetAddress":ADDRESS["street"],"addressLocality":ADDRESS["locality"],
+                      "addressRegion":ADDRESS["region"],"postalCode":ADDRESS["postal"],"addressCountry":ADDRESS["country"]}}
+    web = {"@type":"WebSite","@id":SITE+"/#website","url":SITE+"/","name":"Cinetic Motion","inLanguage":"ko-KR" if ko else "en-US","publisher":{"@id":SITE+"/#organization"}}
+    page = {"@type":"WebPage","@id":url,"url":url,"name":title,"description":desc,"inLanguage":"ko-KR" if ko else "en-US","isPartOf":{"@id":SITE+"/#website"}}
+    graph=[org,web,page]
+    if slug=="cm-1":
+        graph.append({"@type":"Product","name":"CM-1","url":url,"image":SITE+"/assets/img/cm1-product.png",
+            "description":L["cm1"]["p"],"brand":{"@type":"Brand","name":"Cinetic Motion"},"manufacturer":{"@id":SITE+"/#organization"},
+            "category":"로봇카메라 / 카메라로봇" if ko else "Robotic camera system",
+            "additionalProperty":[{"@type":"PropertyValue","name":k,"value":v} for k,v in SPEC]})
+    if slug=="radius":
+        graph.append({"@type":"SoftwareApplication","name":"RADIUS","url":url,"image":SITE+"/assets/img/radius-screen.png",
+            "applicationCategory":"MultimediaApplication","operatingSystem":"Windows","description":L["radius"]["p"],
+            "publisher":{"@id":SITE+"/#organization"}})
+    if slug in ("contact","contact-post-me"):
+        page["@type"]="ContactPage"
+    return {"@context":"https://schema.org","@graph":graph}
+
 def analytics():
     """Google Analytics 4 (gtag.js). Emits nothing while GA_ID is still the placeholder."""
     if not GA_ID or "XXXX" in GA_ID:
@@ -107,17 +167,44 @@ def layout(L, slug, title, body, cur):
     other_href = ("en/" if L["lang"]=="ko" else "../") + ("" if slug=="index" else slug + ".html")
     nav = "".join(f'<li><a href="{s}.html"{" class=active" if s==cur else ""}>{E(n)}</a></li>' for n,s in L["nav"])
     canonical = SITE + ("/" if L["lang"]=="ko" else "/en/") + ("" if slug=="index" else slug)
+    ko_url = SITE + "/" + ("" if slug=="index" else slug)
+    en_url = SITE + "/en/" + ("" if slug=="index" else slug)
+    seo_title, seo_desc = SEO[L["lang"]][slug]
+    keywords = ("로봇촬영, 모션컨트롤, 카메라로봇, 로봇카메라, 촬영자동화, AI촬영, 로봇포토, 씨네틱모션, CM-1, RADIUS"
+                if L["lang"]=="ko" else "robotic camera, motion control, camera robot, robot cinematography, automated filming, Cinetic Motion, CM-1, RADIUS")
+    verification = ""
+    if NAVER_SITE_VERIFICATION: verification += f'<meta name="naver-site-verification" content="{NAVER_SITE_VERIFICATION}">\n'
+    if GOOGLE_SITE_VERIFICATION: verification += f'<meta name="google-site-verification" content="{GOOGLE_SITE_VERIFICATION}">\n'
+    jsonld = json.dumps(structured_data(L, slug, canonical, seo_title, seo_desc), ensure_ascii=False, separators=(",",":"))
     return f"""<!DOCTYPE html>
 <html lang="{L['lang']}">
 <head>
 <meta charset="utf-8">
 {analytics()}
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{E(title)} | Cinetic Motion</title>
-<meta name="description" content="Cinetic Motion – high-tech robotic camera systems (CM-1, RADIUS) for filmmaking.">
-<link rel="canonical" href="{canonical}">
-<link rel="alternate" hreflang="ko-kr" href="{SITE}/{'' if slug=='index' else slug}">
-<link rel="alternate" hreflang="en-us" href="{SITE}/en/{'' if slug=='index' else slug}">
+<title>{E(seo_title)}</title>
+<meta name="description" content="{E(seo_desc)}">
+<meta name="keywords" content="{E(keywords)}">
+<meta name="robots" content="index,follow,max-image-preview:large">
+{verification}<link rel="canonical" href="{canonical}">
+<link rel="alternate" hreflang="ko-KR" href="{ko_url}">
+<link rel="alternate" hreflang="en-US" href="{en_url}">
+<link rel="alternate" hreflang="x-default" href="{ko_url}">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Cinetic Motion">
+<meta property="og:locale" content="{'ko_KR' if L['lang']=='ko' else 'en_US'}">
+<meta property="og:locale:alternate" content="{'en_US' if L['lang']=='ko' else 'ko_KR'}">
+<meta property="og:url" content="{canonical}">
+<meta property="og:title" content="{E(seo_title)}">
+<meta property="og:description" content="{E(seo_desc)}">
+<meta property="og:image" content="{SITE}/assets/img/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{E(seo_title)}">
+<meta name="twitter:description" content="{E(seo_desc)}">
+<meta name="twitter:image" content="{SITE}/assets/img/og-image.jpg">
+<script type="application/ld+json">{jsonld}</script>
 <link rel="icon" href="{P}assets/img/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
@@ -158,16 +245,17 @@ def home(L):
 def products(L):
     P=L["prefix"]; c=L["products"]
     return f"""
+<h1 class="visually-hidden">{E(SEO[L["lang"]]["products"][0])}</h1>
 <section class="product-row">
   <div class="product-card">
     <img class="wordmark" src="{P}assets/img/cm1-wordmark.png" alt="CM-1">
-    <img class="product-visual" src="{P}assets/img/products-cm1.jpg" alt="CM-1 robot camera system">
+    <img class="product-visual" src="{P}assets/img/products-cm1.jpg" alt="{'CM-1 로봇촬영 시스템 촬영 장면' if L['lang']=='ko' else 'CM-1 robotic filming system on set'}">
     <p>{E(c['cm1'])}</p>
     <a class="more" href="cm-1.html">{E(c['more'])}</a>
   </div>
   <div class="product-card">
     <img class="wordmark" src="{P}assets/img/radius-wordmark.png" alt="RADIUS">
-    <img class="product-visual" src="{P}assets/img/products-radius.jpg" alt="RADIUS software">
+    <img class="product-visual" src="{P}assets/img/products-radius.jpg" alt="{'RADIUS 모션컨트롤 타임라인 화면' if L['lang']=='ko' else 'RADIUS motion control timeline'}">
     <p>{E(c['radius'])}</p>
     <a class="more" href="radius.html">{E(c['more'])}</a>
   </div>
@@ -186,11 +274,11 @@ def cm1(L):
     spec="".join(f'<tr><th>{E(k)}</th><td>{E(v)}</td></tr>' for k,v in SPEC)
     return f"""
 <section class="hero product-hero" style="background-image:url('{P}assets/img/cm1-bg.jpg')">
-  <img class="wordmark big" src="{P}assets/img/cm1-title.png" alt="CM-1">
+  <h1><img class="wordmark big" src="{P}assets/img/cm1-title.png" alt="{'CM-1 로봇카메라 · 6축 카메라로봇' if L['lang']=='ko' else 'CM-1 robotic camera system'}"></h1>
   <p class="lead">{E(c['lead'])}</p>
 </section>
 <section class="intro two-col">
-  <img src="{P}assets/img/cm1-product.png" alt="CM-1 robot camera system">
+  <img src="{P}assets/img/cm1-product.png" alt="{'씨네틱모션 CM-1 로봇카메라 본체' if L['lang']=='ko' else 'Cinetic Motion CM-1 camera robot'}" loading="lazy">
   <p>{E(c['p'])}</p>
 </section>
 <section class="features-grid dark">
@@ -205,17 +293,17 @@ def cm1(L):
 
 def radius(L):
     P=L["prefix"]; c=L["radius"]
-    cards="".join(f'<li><img src="{P}assets/img/radius-feature-{i+1}.jpg" alt=""><h3>{E(h)}</h3><p>{E(p)}</p></li>' for i,(h,p) in enumerate(c["features"]))
+    cards="".join(f'<li><img src="{P}assets/img/radius-feature-{i+1}.jpg" alt="{E(h)}" loading="lazy"><h3>{E(h)}</h3><p>{E(p)}</p></li>' for i,(h,p) in enumerate(c["features"]))
     return f"""
 <section class="hero product-hero" style="background-image:url('{P}assets/img/radius-hero.jpg')">
-  <img class="wordmark big" src="{P}assets/img/radius-title.png" alt="RADIUS">
+  <h1><img class="wordmark big" src="{P}assets/img/radius-title.png" alt="{'RADIUS 모션컨트롤 소프트웨어' if L['lang']=='ko' else 'RADIUS motion control software'}"></h1>
   <p class="lead">{E(c['lead'])}</p>
 </section>
 <section class="intro two-col">
-  <img src="{P}assets/img/radius-product.png" alt="RADIUS controller">
+  <img src="{P}assets/img/radius-product.png" alt="{'RADIUS 모션컨트롤 소프트웨어 로고' if L['lang']=='ko' else 'RADIUS motion control software'}" loading="lazy">
   <p>{E(c['p'])}</p>
 </section>
-<section class="screenshot"><img src="{P}assets/img/radius-screen.png" alt="RADIUS timeline interface"></section>
+<section class="screenshot"><img src="{P}assets/img/radius-screen.png" alt="{'RADIUS 로봇촬영 시뮬레이터 및 타임라인 인터페이스' if L['lang']=='ko' else 'RADIUS robot simulator and timeline interface'}" loading="lazy"></section>
 <section class="key-features">
   <h2>{E(c['kf'])}</h2>
   <ul>{cards}</ul>
@@ -247,6 +335,7 @@ def contact(L):
 <section class="contact two-col">
   <div class="contact-info">
     <h1>{E(c['h1'])}</h1>
+    <p>{E("로봇촬영 시스템 도입, 렌탈, 데모, 견적을 문의해 주세요." if L["lang"]=="ko" else "Ask us about system purchase, rental, demos and pricing.")}</p>
     <p><a href="mailto:{EMAIL}">{EMAIL}</a></p>
     <p><a href="{IG_MAIN}" target="_blank" rel="noopener">{E(c['ig'])}</a></p>
   </div>
@@ -281,11 +370,22 @@ def main():
             with open(os.path.join(outdir, slug+".html"),"w",encoding="utf-8") as fh:
                 fh.write(layout(L, slug, title, fn(L), slug))
             print("wrote", os.path.relpath(os.path.join(outdir, slug+".html"), ROOT))
-    # sitemap
-    urls=[SITE+"/"]+[f"{SITE}/{s}" for s,_,_ in PAGES[1:]]+[SITE+"/en/"]+[f"{SITE}/en/{s}" for s,_,_ in PAGES[1:]]
+    # sitemap with hreflang alternates
+    def alt(slug):
+        ko=f"{SITE}/"+("" if slug=="index" else slug); en=f"{SITE}/en/"+("" if slug=="index" else slug)
+        return (f'    <xhtml:link rel="alternate" hreflang="ko-KR" href="{ko}"/>\n'
+                f'    <xhtml:link rel="alternate" hreflang="en-US" href="{en}"/>\n'
+                f'    <xhtml:link rel="alternate" hreflang="x-default" href="{ko}"/>\n')
+    entries=""
+    for lang in ("ko","en"):
+        for slug,_,_ in PAGES:
+            loc=f"{SITE}/"+("en/" if lang=="en" else "")+("" if slug=="index" else slug)
+            pri="1.0" if slug=="index" else ("0.9" if slug in ("cm-1","radius","products") else "0.6")
+            entries+=f"  <url>\n    <loc>{loc}</loc>\n{alt(slug)}    <changefreq>monthly</changefreq>\n    <priority>{pri}</priority>\n  </url>\n"
     with open(os.path.join(ROOT,"sitemap.xml"),"w") as fh:
-        fh.write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+
-                 "".join(f"  <url><loc>{u}</loc></url>\n" for u in urls)+"</urlset>\n")
+        fh.write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n'+entries+"</urlset>\n")
+    with open(os.path.join(ROOT,"robots.txt"),"w") as fh:
+        fh.write(f"User-agent: *\nAllow: /\nDisallow: /src/\nDisallow: /scripts/\n\nSitemap: {SITE}/sitemap.xml\n")
 
 if __name__=="__main__":
     main()
