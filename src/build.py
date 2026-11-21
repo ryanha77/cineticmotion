@@ -11,8 +11,10 @@ GA_ID = "G-N6YCD6YCRB"   # Google Analytics 4 measurement ID (Admin > Data strea
 IG_MAIN = "https://www.instagram.com/cineticmotion"
 IG_POSTME = "https://www.instagram.com/post___me/"
 EMAIL = "info@cineticmotion.com"
+POSTME_URL = "http://www.postme.co.kr"   # POST-ME nav item opens the separate POST-ME site (same target as on Wix)
 NAVER_SITE_VERIFICATION = ""   # Naver Search Advisor > 사이트 관리 > 소유확인 > HTML 태그 값. Empty = tag omitted.
 GOOGLE_SITE_VERIFICATION = ""  # Google Search Console > HTML 태그 값. Empty = tag omitted.
+PRIVACY_PHONE = "0507-1389-3478"
 COMPANY_KO = "주식회사 씨네틱모션"
 COMPANY_EN = "Cinetic Motion Inc."
 ADDRESS = dict(street="테헤란로77길 11-15, 1001호", locality="강남구", region="서울특별시", postal="06159", country="KR")
@@ -32,6 +34,7 @@ SEO = {
               "로봇촬영 시스템 CM-1, 모션컨트롤 RADIUS 도입, 렌탈, 데모, 견적 문의. 서울 강남 씨네틱모션."),
   "contact-post-me": ("POST-ME 문의 | 로봇포토 자동촬영 - 씨네틱모션",
               "로봇포토 서비스 POST-ME 관련 문의. 카메라로봇 기반 자동 촬영 솔루션에 대해 문의하세요."),
+  "privacy": ("개인정보처리방침 - 씨네틱모션", "주식회사 씨네틱모션 개인정보처리방침."),
  },
  "en": {
   "index":   ("Cinetic Motion | Robotic Camera & Motion Control for Filmmaking",
@@ -46,13 +49,14 @@ SEO = {
               "Ask about the CM-1 robotic camera system, RADIUS motion control, rental, demo and pricing. Seoul, Korea."),
   "contact-post-me": ("POST-ME Contact | Automated Robot Photography - Cinetic Motion",
               "Contact us about POST-ME, the robot-camera based automated photo service."),
+  "privacy": ("Privacy Policy - Cinetic Motion", "Cinetic Motion Co., Ltd. privacy policy."),
  },
 }
 
 T = {
  "ko": dict(
    lang="ko", other="en", other_label="EN", prefix="",
-   nav=[("제품","products"),("CM-1","cm-1"),("RADIUS","radius"),("POST-ME","contact-post-me"),("문의","contact")],
+   nav=[("제품","products"),("POST-ME",POSTME_URL),("문의","contact")], privacy_label="개인정보처리방침",
    footer="©2026 주식회사 씨네틱모션, 서울시 강남구 테헤란로77길 11-15, 1001호 06159",
    home=dict(title="Home", h1="하이테크 필름메이킹 솔루션",
              sub="복잡한 무빙을 구현하는 정밀한 제어, 필름메이킹의 한계를 뛰어넘는 모션", cta="자세히 보기 →"),
@@ -81,10 +85,11 @@ T = {
             thanks="문의 감사드립니다. 곧 답변 드리겠습니다."),
      subjects=["CM-1","RADIUS","POST-ME","기타"]),
    postme=dict(title="CONTACT POST-ME", explore="Explore Products →", h1="Contact Us", ig="@cineticmotion", tag="@POST-ME"),
+   privacy=dict(title="개인정보처리방침"),
  ),
  "en": dict(
    lang="en", other="ko", other_label="KO", prefix="../",
-   nav=[("PRODUCTS","products"),("CM-1","cm-1"),("RADIUS","radius"),("POST-ME","contact-post-me"),("CONTACT","contact")],
+   nav=[("PRODUCTS","products"),("POST-ME",POSTME_URL),("CONTACT","contact")], privacy_label="Privacy",
    footer="©2026 by Cinetic Motion Inc. Suite #1001, 11-15 Teheran-ro 77-gil, Gangnam-gu, Seoul 06159, Korea",
    home=dict(title="Home", h1="The Next Generation of Filmmaking",
              sub="Redefining complex camera movements with precision control, engineered to push the limits of motion.", cta="Learn More →"),
@@ -113,6 +118,7 @@ T = {
             thanks="Thanks for submitting! We will get back to you shortly."),
      subjects=["CM-1","RADIUS","POST-ME","Other"]),
    postme=dict(title="CONTACT POST-ME", explore="Explore Products →", h1="Contact Us", ig="@cineticmotion", tag="@POST-ME"),
+   privacy=dict(title="Privacy"),
  ),
 }
 
@@ -165,13 +171,26 @@ def video(P):
 def layout(L, slug, title, body, cur):
     P = L["prefix"]
     other_href = ("en/" if L["lang"]=="ko" else "../") + ("" if slug=="index" else slug + ".html")
-    nav = "".join(f'<li><a href="{s}.html"{" class=active" if s==cur else ""}>{E(n)}</a></li>' for n,s in L["nav"])
-    canonical = SITE + ("/" if L["lang"]=="ko" else "/en/") + ("" if slug=="index" else slug)
+    self_href = "" if slug=="index" else slug + ".html"
+    items=[]
+    for n,sl in L["nav"]:
+        if sl.startswith("http"):
+            items.append(f'<li><a href="{sl}" target="_blank" rel="noopener">{E(n)}</a></li>')
+        elif sl=="products":
+            act = " class=active" if cur in ("products","cm-1","radius") else ""
+            items.append(f'<li class="has-sub"><a href="products.html"{act}>{E(n)}</a><ul class="sub"><li><a href="cm-1.html">CM-1</a></li><li><a href="radius.html">RADIUS</a></li></ul></li>')
+        else:
+            items.append(f'<li><a href="{sl}.html"{" class=active" if sl==cur else ""}>{E(n)}</a></li>')
+    nav="".join(items)
+    ko = L["lang"]=="ko"
+    lang_sw = (f'<a class="lang{" on" if not ko else ""}" href="{other_href if ko else self_href or "./"}" lang="en">EN</a>'
+               f'<a class="lang{" on" if ko else ""}" href="{self_href or "./" if ko else other_href}" lang="ko">KO</a>')
+    canonical = SITE + ("/" if ko else "/en/") + ("" if slug=="index" else slug)
     ko_url = SITE + "/" + ("" if slug=="index" else slug)
     en_url = SITE + "/en/" + ("" if slug=="index" else slug)
     seo_title, seo_desc = SEO[L["lang"]][slug]
     keywords = ("로봇촬영, 모션컨트롤, 카메라로봇, 로봇카메라, 촬영자동화, AI촬영, 로봇포토, 씨네틱모션, CM-1, RADIUS"
-                if L["lang"]=="ko" else "robotic camera, motion control, camera robot, robot cinematography, automated filming, Cinetic Motion, CM-1, RADIUS")
+                if ko else "robotic camera, motion control, camera robot, robot cinematography, automated filming, Cinetic Motion, CM-1, RADIUS")
     verification = ""
     if NAVER_SITE_VERIFICATION: verification += f'<meta name="naver-site-verification" content="{NAVER_SITE_VERIFICATION}">\n'
     if GOOGLE_SITE_VERIFICATION: verification += f'<meta name="google-site-verification" content="{GOOGLE_SITE_VERIFICATION}">\n'
@@ -192,8 +211,8 @@ def layout(L, slug, title, body, cur):
 <link rel="alternate" hreflang="x-default" href="{ko_url}">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Cinetic Motion">
-<meta property="og:locale" content="{'ko_KR' if L['lang']=='ko' else 'en_US'}">
-<meta property="og:locale:alternate" content="{'en_US' if L['lang']=='ko' else 'ko_KR'}">
+<meta property="og:locale" content="{'ko_KR' if ko else 'en_US'}">
+<meta property="og:locale:alternate" content="{'en_US' if ko else 'ko_KR'}">
 <meta property="og:url" content="{canonical}">
 <meta property="og:title" content="{E(seo_title)}">
 <meta property="og:description" content="{E(seo_desc)}">
@@ -213,16 +232,19 @@ def layout(L, slug, title, body, cur):
 </head>
 <body class="page-{slug}">
 <header class="site-header">
-  <a class="logo" href="index.html"><img src="{P}assets/img/logo-white.png" alt="Cinetic Motion"></a>
-  <button class="nav-toggle" aria-label="Menu" aria-expanded="false">☰</button>
-  <nav><ul>{nav}<li><a class="lang" href="{other_href}">{L['other_label']}</a></li></ul></nav>
+  <div class="wrap">
+    <a class="logo" href="index.html"><img src="{P}assets/img/logo-white.png" alt="Cinetic Motion"></a>
+    <button class="nav-toggle" aria-label="Menu" aria-expanded="false">☰</button>
+    <nav><ul class="menu">{nav}</ul><div class="langs">{lang_sw}</div></nav>
+  </div>
 </header>
 <main>
 {body}
 </main>
 <footer class="site-footer">
-  <p><a href="mailto:{EMAIL}">{EMAIL}</a> <a class="ig" href="{IG_MAIN}" target="_blank" rel="noopener"><img src="{P}assets/img/instagram.png" alt="Instagram"></a></p>
+  <p class="mail"><a href="mailto:{EMAIL}">{EMAIL}</a><a class="ig" href="{IG_MAIN}" target="_blank" rel="noopener" aria-label="Instagram"><img src="{P}assets/img/instagram.png" alt=""></a></p>
   <p class="copy">{E(L['footer'])}</p>
+  <p class="legal"><a href="privacy.html">{E(L['privacy_label'])}</a></p>
 </footer>
 <script src="{P}assets/site.js"></script>
 </body>
@@ -231,82 +253,142 @@ def layout(L, slug, title, body, cur):
 
 def home(L):
     P=L["prefix"]; c=L["home"]
+    vid = os.path.exists(os.path.join(ROOT, "assets/video/home-loop.mp4"))
+    media = (f'<video class="bg" autoplay muted loop playsinline preload="metadata" poster="{P}assets/img/home-second.jpg" src="{P}assets/video/home-loop.mp4"></video>'
+             if vid else f'<img class="bg" src="{P}assets/img/home-second.jpg" alt="">')
     return f"""
-<section class="hero full" style="background-image:url('{P}assets/img/home-hero.jpg')">
-  <div class="hero-text">
-    <h1>{E(c['h1'])}</h1>
-    <p>{E(c['sub'])}</p>
-    <a class="cta" href="products.html">{E(c['cta'])}</a>
+<section class="home-hero">
+  {media}
+  <div class="wrap">
+    <div class="hero-box">
+      <h1>{E(c['h1'])}</h1>
+      <p>{E(c['sub'])}</p>
+      <a class="btn-outline" href="products.html">{E(c['cta'])}</a>
+    </div>
   </div>
 </section>
-{video(P)}
+<section class="home-robot" style="background-image:url('{P}assets/img/home-hero.jpg')"></section>
 """
 
 def products(L):
     P=L["prefix"]; c=L["products"]
     return f"""
 <h1 class="visually-hidden">{E(SEO[L["lang"]]["products"][0])}</h1>
-<section class="product-row">
-  <div class="product-card">
-    <img class="wordmark" src="{P}assets/img/cm1-wordmark.png" alt="CM-1">
-    <img class="product-visual" src="{P}assets/img/products-cm1.jpg" alt="{'CM-1 로봇촬영 시스템 촬영 장면' if L['lang']=='ko' else 'CM-1 robotic filming system on set'}">
+<section class="prod-band prod-cm1" style="background-image:url('{P}assets/img/products-cm1.jpg')">
+  <div class="wrap">
+    <img class="wordmark" src="{P}assets/img/cm1-wordmark.png" alt="CM-1" width="229" height="71">
     <p>{E(c['cm1'])}</p>
-    <a class="more" href="cm-1.html">{E(c['more'])}</a>
+    <a class="btn-outline small" href="cm-1.html">{E(c['more'])}</a>
   </div>
-  <div class="product-card">
-    <img class="wordmark" src="{P}assets/img/radius-wordmark.png" alt="RADIUS">
-    <img class="product-visual" src="{P}assets/img/products-radius.jpg" alt="{'RADIUS 모션컨트롤 타임라인 화면' if L['lang']=='ko' else 'RADIUS motion control timeline'}">
+</section>
+<section class="prod-band prod-radius" style="background-image:url('{P}assets/img/products-radius.jpg')">
+  <div class="wrap">
+    <img class="wordmark" src="{P}assets/img/radius-wordmark.png" alt="RADIUS" width="480" height="98">
     <p>{E(c['radius'])}</p>
-    <a class="more" href="radius.html">{E(c['more'])}</a>
+    <a class="btn-outline small" href="radius.html">{E(c['more'])}</a>
   </div>
 </section>
-<section class="statement" style="background-image:url('{P}assets/img/products-bg.jpg')">
-  <h2>{E(c['h2'])}</h2>
-  <p>{E(c['p'])}</p>
+<section class="prod-statement">
+  <div class="wrap">
+    <h2>{E(c['h2'])}</h2>
+    <p>{E(c['p'])}</p>
+  </div>
 </section>
+<section class="prod-studio" style="background-image:url('{P}assets/img/products-bg.jpg')"></section>
 """
 
 def cm1(L):
-    P=L["prefix"]; c=L["cm1"]
-    # Wix lists the 12 feature captions column-wise but the icon sprite is row-wise; this maps caption i -> icon file.
-    icon_order=[1,2,3,4,9,10,11,12,5,6,7,8]
-    feats="".join(f'<li><img src="{P}assets/img/cm1-icon-{icon_order[i]:02d}.png" alt=""><span>{E(t)}</span></li>' for i,t in enumerate(c["features"]))
+    P=L["prefix"]; c=L["cm1"]; ko=L["lang"]=="ko"
+    icon_order=[1,2,3,4,9,10,11,12,5,6,7,8]   # Wix lists captions column-wise; the icon sheet is row-wise
+    feats="".join(f'<li><img src="{P}assets/img/cm1-icon-{icon_order[i]:02d}.png" alt="" loading="lazy"><span>{E(t)}</span></li>' for i,t in enumerate(c["features"]))
     spec="".join(f'<tr><th>{E(k)}</th><td>{E(v)}</td></tr>' for k,v in SPEC)
     return f"""
-<section class="hero product-hero" style="background-image:url('{P}assets/img/cm1-bg.jpg')">
-  <h1><img class="wordmark big" src="{P}assets/img/cm1-title.png" alt="{'CM-1 로봇카메라 · 6축 카메라로봇' if L['lang']=='ko' else 'CM-1 robotic camera system'}"></h1>
-  <p class="lead">{E(c['lead'])}</p>
+<section class="cm1-hero" style="background-image:url('{P}assets/img/cm1-hero.jpg')">
+  <div class="wrap">
+    <h1><img src="{P}assets/img/cm1-title.png" alt="{'CM-1 로봇카메라' if ko else 'CM-1 robotic camera system'}" width="398" height="124"></h1>
+    <p class="lead">{E(c['lead'])}</p>
+  </div>
 </section>
-<section class="intro two-col">
-  <img src="{P}assets/img/cm1-product.png" alt="{'씨네틱모션 CM-1 로봇카메라 본체' if L['lang']=='ko' else 'Cinetic Motion CM-1 camera robot'}" loading="lazy">
-  <p>{E(c['p'])}</p>
+<section class="cm1-features">
+  <div class="wrap">
+    <img class="wordmark" src="{P}assets/img/cm1-title.png" alt="CM-1" width="184" height="57">
+    <p class="intro">{E(c['p'])}</p>
+    <ul class="icons">{feats}</ul>
+  </div>
 </section>
-<section class="features-grid dark">
-  <ul>{feats}</ul>
-  <a class="btn" href="contact.html">{E(c['quote'])}</a>
+<section class="cm1-gap"></section>
+<section class="cm1-spec" style="background-image:url('{P}assets/img/cm1-product.png')">
+  <div class="wrap">
+    <h2>{E(c['spec_title'])}</h2>
+    <table>{spec}</table>
+    <a class="btn-solid" href="contact.html">{E(c['quote'])}</a>
+  </div>
 </section>
-<section class="spec grey">
-  <h2>{E(c['spec_title'])}</h2>
-  <table>{spec}</table>
-</section>
+<section class="cm1-strip" style="background-image:url('{P}assets/img/cm1-bg.jpg')"></section>
+<section class="cm1-grey"></section>
 """
 
 def radius(L):
-    P=L["prefix"]; c=L["radius"]
-    cards="".join(f'<li><img src="{P}assets/img/radius-feature-{i+1}.jpg" alt="{E(h)}" loading="lazy"><h3>{E(h)}</h3><p>{E(p)}</p></li>' for i,(h,p) in enumerate(c["features"]))
+    P=L["prefix"]; c=L["radius"]; ko=L["lang"]=="ko"
+    cards="".join(f'<li><img src="{P}assets/img/radius-feature-{i+1}.jpg" alt="{E(h)}" loading="lazy" width="172" height="285"><div><h3>{E(h)}</h3><p>{E(d)}</p></div></li>' for i,(h,d) in enumerate(c["features"]))
     return f"""
-<section class="hero product-hero" style="background-image:url('{P}assets/img/radius-hero.jpg')">
-  <h1><img class="wordmark big" src="{P}assets/img/radius-title.png" alt="{'RADIUS 모션컨트롤 소프트웨어' if L['lang']=='ko' else 'RADIUS motion control software'}"></h1>
-  <p class="lead">{E(c['lead'])}</p>
+<section class="radius-hero">
+  <div class="wrap">
+    <div class="txt">
+      <h1><img src="{P}assets/img/radius-title.png" alt="{'RADIUS 모션컨트롤 소프트웨어' if ko else 'RADIUS motion control software'}" width="404" height="83"></h1>
+      <p>{E(c['lead'])} {E(c['p'])}</p>
+    </div>
+    <img class="product" src="{P}assets/img/radius-product.png" alt="RADIUS" width="433" height="415">
+  </div>
 </section>
-<section class="intro two-col">
-  <img src="{P}assets/img/radius-product.png" alt="{'RADIUS 모션컨트롤 소프트웨어 로고' if L['lang']=='ko' else 'RADIUS motion control software'}" loading="lazy">
-  <p>{E(c['p'])}</p>
+<section class="radius-features">
+  <div class="wrap">
+    <h2>{E(c['kf'])}</h2>
+    <img class="screen" src="{P}assets/img/radius-screen.png" alt="{'RADIUS 로봇 시뮬레이터 및 타임라인 인터페이스' if ko else 'RADIUS robot simulator and timeline interface'}" loading="lazy" width="980" height="553">
+    <ul class="cards">{cards}</ul>
+    <img class="set" src="{P}assets/img/radius-hero.jpg" alt="{'RADIUS로 촬영 중인 현장' if ko else 'On set with RADIUS'}" loading="lazy" width="979" height="677">
+  </div>
 </section>
-<section class="screenshot"><img src="{P}assets/img/radius-screen.png" alt="{'RADIUS 로봇촬영 시뮬레이터 및 타임라인 인터페이스' if L['lang']=='ko' else 'RADIUS robot simulator and timeline interface'}" loading="lazy"></section>
-<section class="key-features">
-  <h2>{E(c['kf'])}</h2>
-  <ul>{cards}</ul>
+"""
+
+def privacy(L):
+    secs=[("1. Personal Information Collected and Collection Methods",
+      ["The Company may collect the following personal information to provide consultation on the introduction of AI camera robot solutions (such as RADIUS and POST-ME), deliver quotations and proposals, and respond to customer inquiries:",
+       "Items Collected: Company name, contact person's name, phone number, email address, and other information entered or selected by the user during inquiry and consultation processes (such as space type, desired engagement/deployment type, and expected timeline).",
+       "Collection Methods: Website inquiry forms, Meta lead forms (Instant Forms), email, and phone consultations."]),
+     ("2. Purpose of Collection and Use of Personal Information",
+      ["The Company uses collected personal information solely for the following purposes:",
+       "Consultation on the introduction of AI camera robot solutions and provision of customized proposals and quotations.",
+       "Review of space suitability and schedule coordination for pop-ups, retail stores, events, and other venues.",
+       "Inquiry history management and customer support."]),
+     ("3. Retention and Use Period of Personal Information",
+      ["The Company destroys personal information without delay once the purpose of collection and use has been achieved.",
+       "General Rule: Destroyed without delay after 1 year from the date of collection.",
+       "Exceptions: If a separate contract is entered into following consultation, information will be retained and managed in accordance with applicable laws and contract terms, or for the period required by applicable laws where retention is mandated."]),
+     ("4. Procedures and Methods for Destruction of Personal Information",
+      ["When the retention period expires or the processing purpose is fulfilled, the Company destroys personal information using methods that make it irrecoverable.",
+       "Electronic Files: Permanently deleted using technical methods that prevent recovery or restoration.",
+       "Printed Materials and Documents: Shredded using a paper shredder or incinerated."]),
+     ("5. Provision to Third Parties and Processing Outsourcing",
+      ["In principle, the Company does not provide users' personal information to external parties. However, where third-party provision or processing outsourcing is required based on applicable laws or for smooth service operation and inquiry response, the Company will notify users or obtain consent in advance in accordance with relevant laws."]),
+     ("6. Rights and Obligations of Data Subjects and Methods of Exercise",
+      ["Users (data subjects) may exercise their rights to request access to, rectification of, deletion of, or suspension of processing of their personal information from the Company at any time. Requests may be submitted in writing, by email, or by phone through the contact details below, and the Company will take necessary action without delay."]),
+     ("7. Measures to Ensure Security of Personal Information",
+      ["To prevent the loss, theft, leakage, alteration, or damage of personal information, the Company implements necessary security measures, including access control, password/account management, and internal management standards."]),
+     ("8. Privacy Officer and Contact Information",
+      ["For inquiries, requests for access, rectification, or deletion, or complaints regarding personal information processing, please contact us using the details below:",
+       "Company Name: Cinetic Motion Co., Ltd.", "Privacy Officer / Department: Marketing Team", f"Phone: {PRIVACY_PHONE}", f"Email: {EMAIL}"]),
+     ("9. Changes to the Privacy Policy",
+      ["This Privacy Policy may be revised in accordance with changes in laws or company policies. Any changes will be announced through notices on the website or updates to this page.",
+       "Effective Date: November 19, 2026"])]
+    body="".join(f"<h2>{E(h)}</h2>"+"".join(f"<p>{E(x)}</p>" for x in ps) for h,ps in secs)
+    return f"""
+<section class="privacy">
+  <div class="wrap">
+    <h1>Privacy Policy</h1>
+    <p>Cinetic Motion Co., Ltd. (hereinafter referred to as the "Company") values users' personal information and complies with applicable laws and regulations, including the Personal Information Protection Act. Through this Privacy Policy, the Company informs users of the purposes and methods by which the personal information they provide is used, as well as the measures taken to protect their personal information.</p>
+    {body}
+  </div>
 </section>
 """
 
@@ -359,7 +441,7 @@ def postme(L):
 """
 
 PAGES = [("index","home",home),("products","products",products),("cm-1","cm1",cm1),("radius","radius",radius),
-         ("contact","contact",contact),("contact-post-me","postme",postme)]
+         ("contact","contact",contact),("contact-post-me","postme",postme),("privacy","privacy",privacy)]
 
 def main():
     for lang,L in T.items():
