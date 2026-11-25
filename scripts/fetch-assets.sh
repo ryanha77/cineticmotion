@@ -22,6 +22,8 @@ get "ae1c23_e576433298a842bcad41fdfa4d1369d8~mv2.jpg"  products-radius.jpg   # "
 get "d14da8_2e850572e55747e3af49c66a4c5d79aa~mv2.jpg"  products-bg.jpg
 # CM-1
 get "d14da8_03ad5ee4f761400ba5c8c7e77b2f6f71~mv2.jpg"  cm1-bg.jpg
+get "d14da8_86139ef3e79949c3b59ab119bbc035eb~mv2.png"  cm1-hero.png   # converted to cm1-hero.jpg (1600px) in the repo
+get "d14da8_efa4ae8cbfbf432685477a26d8f92d06~mv2.jpg"  cm1-features-bg.jpg
 get "d14da8_466396a5758d4b658d55a1c6c6c42819~mv2.png"  cm1-title.png
 get "ae1c23_60e79afa41584f1792d90a164751e824~mv2.png"  cm1-product.png
 get "d14da8_a0748d1cec104de2bfd29458033aea03~mv2.png"  cm1-sprite-a.png
