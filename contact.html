@@ -52,30 +52,34 @@ gtag('js',new Date());gtag('config','G-N6YCD6YCRB',{anonymize_ip:true});
   <div class="contact-info">
     <h1>문의하기</h1>
     <p>로봇촬영 시스템 도입, 렌탈, 데모, 견적을 문의해 주세요.</p>
-    <p><a href="mailto:info@cineticmotion.com">info@cineticmotion.com</a></p>
-    <p><a href="https://www.instagram.com/cineticmotion" target="_blank" rel="noopener">@cineticmotion</a></p>
   </div>
-  
+</section>
+<section class="contact-body">
 <form class="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" data-thanks="문의 감사드립니다. 곧 답변 드리겠습니다." data-mailto="info@cineticmotion.com">
   <input type="hidden" name="_subject" value="[cineticmotion.com] Contact">
   <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
-  <label class="half">성함 *<input name="name" required></label>
-  <label class="half">회사명<input name="company"></label>
-  <label>주소<input name="address"></label>
-  <label class="half">이메일 *<input type="email" name="email" required></label>
-  <label class="half">전화<input type="tel" name="phone"></label>
-  <label class="half">주제 *<select name="subject" required><option value="" disabled selected>Choose an option</option><option>CM-1</option><option>RADIUS</option><option>POST-ME</option><option>기타</option></select></label>
-  <label>내용<textarea name="message" rows="8"></textarea></label>
-  <button type="submit" class="btn">제출</button>
+  <label class="half"><span class="visually-hidden">성함 *</span><input name="name" required placeholder="성함 *" autocomplete="name"></label>
+  <label class="half"><span class="visually-hidden">회사명</span><input name="company" placeholder="회사명" autocomplete="organization"></label>
+  <label><span class="visually-hidden">주소</span><input name="address" placeholder="주소" autocomplete="street-address"></label>
+  <label class="half"><span class="visually-hidden">이메일 *</span><input type="email" name="email" required placeholder="이메일 *" autocomplete="email"></label>
+  <label class="half"><span class="visually-hidden">전화</span><input type="tel" name="phone" placeholder="전화" autocomplete="tel"></label>
+  <label class="half"><span class="visually-hidden">주제 *</span><select name="subject" required><option value="" disabled selected>주제 *</option><option>CM-1</option><option>RADIUS</option><option>POST-ME</option><option>기타</option></select></label>
+  <label><span class="visually-hidden">내용</span><textarea name="message" rows="8" placeholder="내용"></textarea></label>
+  <button type="submit" class="btn-outline">제출</button>
   <p class="thanks" hidden>문의 감사드립니다. 곧 답변 드리겠습니다.</p>
 </form>
 </section>
 
 </main>
 <footer class="site-footer">
-  <p class="mail"><a href="mailto:info@cineticmotion.com">info@cineticmotion.com</a><a class="ig" href="https://www.instagram.com/cineticmotion" target="_blank" rel="noopener" aria-label="Instagram"><img src="assets/img/instagram.png" alt=""></a></p>
-  <p class="copy">©2026 주식회사 씨네틱모션, 서울시 강남구 테헤란로77길 11-15, 1001호 06159</p>
-  <p class="legal"><a href="privacy.html">개인정보처리방침</a></p>
+  <div class="in">
+    <div class="top"><p>Copyright © 2026 Cinetic Motion Inc. 모든 권리 보유.</p><nav class="legal"><a href="privacy.html">개인정보처리방침</a></nav></div>
+    <div class="info">
+      <p><span>주식회사 씨네틱모션</span><i aria-hidden="true">|</i><span>주소: 서울특별시 강남구 테헤란로77길 11-15, 1001호</span><i aria-hidden="true">|</i><span>전화: <a href="tel:050713893478">0507-1389-3478</a></span></p>
+      <p><span>사업자등록번호: 581-86-03121</span><i aria-hidden="true">|</i><span>이메일: <a class="u" href="mailto:info@cineticmotion.com">info@cineticmotion.com</a></span></p>
+    </div>
+    <a class="ig" href="https://www.instagram.com/cineticmotion" target="_blank" rel="noopener" aria-label="Instagram"><span class="ig-icon" aria-hidden="true"></span></a>
+  </div>
 </footer>
 <script src="assets/site.js"></script>
 </body>

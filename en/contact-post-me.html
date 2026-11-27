@@ -56,27 +56,33 @@ gtag('js',new Date());gtag('config','G-N6YCD6YCRB',{anonymize_ip:true});
     <p><a href="https://www.instagram.com/cineticmotion" target="_blank" rel="noopener">@cineticmotion</a></p>
     <p><a href="https://www.instagram.com/post___me/" target="_blank" rel="noopener">@POST-ME</a></p>
   </div>
-  
+</section>
+<section class="contact-body">
 <form class="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" data-thanks="Thanks for submitting! We will get back to you shortly." data-mailto="info@cineticmotion.com">
   <input type="hidden" name="_subject" value="[cineticmotion.com] Contact">
   <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
-  <label class="half">Name *<input name="name" required></label>
-  <label class="half">Company Name<input name="company"></label>
-  <label>Address<input name="address"></label>
-  <label class="half">Email *<input type="email" name="email" required></label>
-  <label class="half">Phone<input type="tel" name="phone"></label>
-  <label>Subject<input name="subject"></label>
-  <label>Message<textarea name="message" rows="8"></textarea></label>
-  <button type="submit" class="btn">Submit</button>
+  <label class="half"><span class="visually-hidden">Name *</span><input name="name" required placeholder="Name *" autocomplete="name"></label>
+  <label class="half"><span class="visually-hidden">Company Name</span><input name="company" placeholder="Company Name" autocomplete="organization"></label>
+  <label><span class="visually-hidden">Address</span><input name="address" placeholder="Address" autocomplete="street-address"></label>
+  <label class="half"><span class="visually-hidden">Email *</span><input type="email" name="email" required placeholder="Email *" autocomplete="email"></label>
+  <label class="half"><span class="visually-hidden">Phone</span><input type="tel" name="phone" placeholder="Phone" autocomplete="tel"></label>
+  <label><span class="visually-hidden">Subject</span><input name="subject" placeholder="Subject"></label>
+  <label><span class="visually-hidden">Message</span><textarea name="message" rows="8" placeholder="Message"></textarea></label>
+  <button type="submit" class="btn-outline">Submit</button>
   <p class="thanks" hidden>Thanks for submitting! We will get back to you shortly.</p>
 </form>
 </section>
 
 </main>
 <footer class="site-footer">
-  <p class="mail"><a href="mailto:info@cineticmotion.com">info@cineticmotion.com</a><a class="ig" href="https://www.instagram.com/cineticmotion" target="_blank" rel="noopener" aria-label="Instagram"><img src="../assets/img/instagram.png" alt=""></a></p>
-  <p class="copy">©2026 by Cinetic Motion Inc. Suite #1001, 11-15 Teheran-ro 77-gil, Gangnam-gu, Seoul 06159, Korea</p>
-  <p class="legal"><a href="privacy.html">Privacy</a></p>
+  <div class="in">
+    <div class="top"><p>Copyright © 2026 Cinetic Motion Inc. All rights reserved.</p><nav class="legal"><a href="privacy.html">Privacy</a></nav></div>
+    <div class="info">
+      <p><span>Cinetic Motion Inc.</span><i aria-hidden="true">|</i><span>Address: Suite #1001, 11-15 Teheran-ro 77-gil, Gangnam-gu, Seoul 06159, Korea</span><i aria-hidden="true">|</i><span>Tel: <a href="tel:050713893478">0507-1389-3478</a></span></p>
+      <p><span>Business Reg. No.: 581-86-03121</span><i aria-hidden="true">|</i><span>Email: <a class="u" href="mailto:info@cineticmotion.com">info@cineticmotion.com</a></span></p>
+    </div>
+    <a class="ig" href="https://www.instagram.com/cineticmotion" target="_blank" rel="noopener" aria-label="Instagram"><span class="ig-icon" aria-hidden="true"></span></a>
+  </div>
 </footer>
 <script src="../assets/site.js"></script>
 </body>
