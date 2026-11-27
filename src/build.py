@@ -11,6 +11,8 @@ GA_ID = "G-N6YCD6YCRB"   # Google Analytics 4 measurement ID (Admin > Data strea
 IG_MAIN = "https://www.instagram.com/cineticmotion"
 IG_POSTME = "https://www.instagram.com/post___me/"
 EMAIL = "info@cineticmotion.com"
+PHONE = "0507-1389-3478"          # footer (same as POST-ME site footer)
+BIZ_NO = "581-86-03121"           # 사업자등록번호
 POSTME_URL = "http://www.postme.co.kr"   # POST-ME nav item opens the separate POST-ME site (same target as on Wix)
 NAVER_SITE_VERIFICATION = ""   # Naver Search Advisor > 사이트 관리 > 소유확인 > HTML 태그 값. Empty = tag omitted.
 GOOGLE_SITE_VERIFICATION = ""  # Google Search Console > HTML 태그 값. Empty = tag omitted.
@@ -58,16 +60,18 @@ T = {
    lang="ko", other="en", other_label="EN", prefix="",
    nav=[("제품","products"),("POST-ME",POSTME_URL),("문의","contact")], privacy_label="개인정보처리방침",
    footer="©2026 주식회사 씨네틱모션, 서울시 강남구 테헤란로77길 11-15, 1001호 06159",
+   ft=dict(copy="Copyright © 2026 Cinetic Motion Inc. 모든 권리 보유.", company="주식회사 씨네틱모션",
+           address="주소: 서울특별시 강남구 테헤란로77길 11-15, 1001호", phone="전화", biz="사업자등록번호", email="이메일"),
    home=dict(title="Home", h1="하이테크 필름메이킹 솔루션",
              sub="복잡한 무빙을 구현하는 정밀한 제어, 필름메이킹의 한계를 뛰어넘는 모션", cta="자세히 보기 →"),
    products=dict(title="PRODUCTS",
      cm1="영상 전문가를 위해 고도화된 로봇 제어 기능을 최적화하여 다양하고 창의적인 촬영으로 작업 영역을 넓혀줍니다.",
-     radius="단 몇 번의 터치로 하드웨어와 소프트웨어를 가장 직관적으로 연결합니다.",
+     radius="단 몇 번의 터치로 하드웨어와 소프트웨어를\n가장 직관적으로 연결합니다.",
      more="자세히 보기 →", h2="영상 크리에이터의 상상을 실현하는 로봇 카메라 시스템",
      p="단 몇 번의 직관적인 조작만으로 6축 모션(팬·틸트·붐·트랙·더치롤)과 렌즈 제어(FIZ)를 정밀하게 연동하여 완벽한 미장센을 완성합니다. 손끝에서 펼쳐지는 섬세한 컨트롤과 무한한 앵글의 자유도로 로봇 카메라 시스템 CM-1은 촬영의 새로운 기준을 제시합니다."),
    cm1=dict(title="CM-1",
      lead="영상 전문가를 위해 고도화된 로봇 제어 기능을 최적화하여 다양하고 창의적인 촬영으로 작업 영역을 넓혀줍니다.",
-     p="시네틱모션(Cinetic Motion)의 CM-1은 정밀한 촬영, 뛰어난 사용 편의성, 그리고 다재다능함을 겸비한 최첨단 전문가용 로봇 카메라 시스템입니다. 고도화된 로봇 기술을 영상 제작에 접목하여 오차 없는 초정밀 촬영과 반복 촬영 작업을 안정적으로 수행합니다.",
+     p="시네틱모션(Cinetic Motion)의 CM-1은 정밀한 촬영, 뛰어난 사용 편의성, 그리고 다재다능함을 겸비한 최첨단 전문가용 로봇 카메라 시스템입니다.\n고도화된 로봇 기술을 영상 제작에 접목하여 오차 없는 초정밀 촬영과 반복 촬영 작업을 안정적으로 수행합니다.",
      features=["상용 영상 제작 툴과 유사한 직관적인 타임라인 컨트롤","완벽한 초점, 정밀한 조리개 및 줌 제어","6축 로봇이 선사하는 광범위한 카메라 워크","조이스틱으로 조정하는 로봇 카메라 앵글","제공된 거리로 원터치 회전 운동","6축 토크센서 적용으로 높은 안정성","리프트로 확장된 높이와 활동 범위","버튼 하나로 직접 조절하는 카메라 앵글","자동 수평, 수직 제어로 완벽해지는 화면 구도","다중 모션 구현에 최적화된 직관적인 프로젝트 관리 UI","정밀한 반복 촬영으로 정교한 합성 구현","라이브 모니터링으로 정확한 프레이밍 구현"],
      quote="견적문의", spec_title="SPECIFICATION"),
    radius=dict(title="RADIUS",
@@ -91,12 +95,14 @@ T = {
    lang="en", other="ko", other_label="KO", prefix="../",
    nav=[("PRODUCTS","products"),("POST-ME",POSTME_URL),("CONTACT","contact")], privacy_label="Privacy",
    footer="©2026 by Cinetic Motion Inc. Suite #1001, 11-15 Teheran-ro 77-gil, Gangnam-gu, Seoul 06159, Korea",
+   ft=dict(copy="Copyright © 2026 Cinetic Motion Inc. All rights reserved.", company="Cinetic Motion Inc.",
+           address="Address: Suite #1001, 11-15 Teheran-ro 77-gil, Gangnam-gu, Seoul 06159, Korea", phone="Tel", biz="Business Reg. No.", email="Email"),
    home=dict(title="Home", h1="The Next Generation of Filmmaking",
              sub="Redefining complex camera movements with precision control, engineered to push the limits of motion.", cta="Learn More →"),
    products=dict(title="PRODUCTS",
      cm1="CM-1 optimizes high-level robot control for film/video professionals, extending the scope of work to diverse and creative shooting.",
      radius="The powerful RADIUS-based timeline controls go hand in hand with video professionals' intuition.",
-     more="Learn More →", h2="A Robot Camera System Empowering Creative Visions",
+     more="Learn More →", h2="A Robot Camera System\nEmpowering Creative Visions",
      p="With a few clicks, the camera angle, FIZ (Focus/Iris/Zoom), pan, tilt, boom, track, and Dutch roll are accurately implemented to create the best shot. Above all, the intelligent robot camera CM-1 that provides delicate control and free angles presents a new standard for filming."),
    cm1=dict(title="CM-1",
      lead="CM-1 optimizes high-level robot control for film/video professionals, extending the scope of work to diverse and creative shooting.",
@@ -140,7 +146,7 @@ def structured_data(L, slug, url, title, desc):
     graph=[org,web,page]
     if slug=="cm-1":
         graph.append({"@type":"Product","name":"CM-1","url":url,"image":SITE+"/assets/img/cm1-product.png",
-            "description":L["cm1"]["p"],"brand":{"@type":"Brand","name":"Cinetic Motion"},"manufacturer":{"@id":SITE+"/#organization"},
+            "description":L["cm1"]["p"].replace(chr(10)," "),"brand":{"@type":"Brand","name":"Cinetic Motion"},"manufacturer":{"@id":SITE+"/#organization"},
             "category":"로봇카메라 / 카메라로봇" if ko else "Robotic camera system",
             "additionalProperty":[{"@type":"PropertyValue","name":k,"value":v} for k,v in SPEC]})
     if slug=="radius":
@@ -242,9 +248,14 @@ def layout(L, slug, title, body, cur):
 {body}
 </main>
 <footer class="site-footer">
-  <p class="mail"><a href="mailto:{EMAIL}">{EMAIL}</a><a class="ig" href="{IG_MAIN}" target="_blank" rel="noopener" aria-label="Instagram"><img src="{P}assets/img/instagram.png" alt=""></a></p>
-  <p class="copy">{E(L['footer'])}</p>
-  <p class="legal"><a href="privacy.html">{E(L['privacy_label'])}</a></p>
+  <div class="in">
+    <div class="top"><p>{E(L['ft']['copy'])}</p><nav class="legal"><a href="privacy.html">{E(L['privacy_label'])}</a></nav></div>
+    <div class="info">
+      <p><span>{E(L['ft']['company'])}</span><i aria-hidden="true">|</i><span>{E(L['ft']['address'])}</span><i aria-hidden="true">|</i><span>{E(L['ft']['phone'])}: <a href="tel:{PHONE.replace('-','')}">{PHONE}</a></span></p>
+      <p><span>{E(L['ft']['biz'])}: {BIZ_NO}</span><i aria-hidden="true">|</i><span>{E(L['ft']['email'])}: <a class="u" href="mailto:{EMAIL}">{EMAIL}</a></span></p>
+    </div>
+    <a class="ig" href="{IG_MAIN}" target="_blank" rel="noopener" aria-label="Instagram"><span class="ig-icon" aria-hidden="true"></span></a>
+  </div>
 </footer>
 <script src="{P}assets/site.js"></script>
 </body>
@@ -270,28 +281,45 @@ def home(L):
 <section class="home-robot" style="background-image:url('{P}assets/img/home-hero.jpg')"></section>
 """
 
+# Product lineup card images: web 1320x1080, mobile 800x1000 (4:5).
+# Each card takes a list of (web, mobile) images; 2+ images rotate every 3s (CSS crossfade).
+LINEUP_IMG = {
+  "cm1":    [("cm1-card-1.jpg", "cm1-card-1m.jpg"),
+             ("cm1-card-2.jpg", "cm1-card-2m.jpg"),
+             ("cm1-card-3.jpg", "cm1-card-3m.jpg")],
+  "radius": [("radius-card-1.jpg", "radius-card-1m.jpg"),
+             ("radius-card-2.jpg", "radius-card-2m.jpg"),
+             ("radius-card-3.jpg", "radius-card-3m.jpg")],
+}
+
 def products(L):
     P=L["prefix"]; c=L["products"]
+    def card(key, href, name, w, h):
+        imgs=LINEUP_IMG[key]
+        pics="".join(f"""
+      <picture class="bg">
+        <source media="(max-width:768px)" srcset="{P}assets/img/{m}">
+        <img src="{P}assets/img/{w_}" alt="" loading="eager">
+      </picture>""" for w_,m in imgs)
+        rot=f' rotate rot-{len(imgs)}' if len(imgs)>1 else ''
+        return f"""
+    <article class="lineup-card{rot}">{pics}
+      <div class="txt">
+        <h2 class="name"><img class="wordmark" src="{P}assets/img/{key}-wordmark.png" alt="{name}" width="{w}" height="{h}"></h2>
+        <p>{E(c[key]).replace(chr(10),'<br>')}</p>
+      </div>
+      <a class="btn-outline small" href="{href}">{E(c['more'])}</a>
+    </article>"""
     return f"""
 <h1 class="visually-hidden">{E(SEO[L["lang"]]["products"][0])}</h1>
-<section class="prod-band prod-cm1" style="background-image:url('{P}assets/img/products-cm1.jpg')">
-  <div class="wrap">
-    <img class="wordmark" src="{P}assets/img/cm1-wordmark.png" alt="CM-1" width="229" height="71">
-    <p>{E(c['cm1'])}</p>
-    <a class="btn-outline small" href="cm-1.html">{E(c['more'])}</a>
-  </div>
-</section>
-<section class="prod-band prod-radius" style="background-image:url('{P}assets/img/products-radius.jpg')">
-  <div class="wrap">
-    <img class="wordmark" src="{P}assets/img/radius-wordmark.png" alt="RADIUS" width="480" height="98">
-    <p>{E(c['radius'])}</p>
-    <a class="btn-outline small" href="radius.html">{E(c['more'])}</a>
+<section class="prod-lineup">
+  <div class="lineup">{card("cm1","cm-1.html","CM-1",229,71)}{card("radius","radius.html","RADIUS",480,98)}
   </div>
 </section>
 <section class="prod-statement">
   <div class="wrap">
-    <h2>{E(c['h2'])}</h2>
-    <p>{E(c['p'])}</p>
+    <h2 class="reveal">{E(c['h2']).replace(chr(10),'<br>')}</h2>
+    <p class="reveal">{E(c['p'])}</p>
   </div>
 </section>
 <section class="prod-studio" style="background-image:url('{P}assets/img/products-bg.jpg')"></section>
@@ -300,7 +328,7 @@ def products(L):
 def cm1(L):
     P=L["prefix"]; c=L["cm1"]; ko=L["lang"]=="ko"
     icon_order=[1,2,3,4,9,10,11,12,5,6,7,8]   # Wix lists captions column-wise; the icon sheet is row-wise
-    feats="".join(f'<li><img src="{P}assets/img/cm1-icon-{icon_order[i]:02d}.png" alt="" loading="lazy"><span>{E(t)}</span></li>' for i,t in enumerate(c["features"]))
+    feats="".join(f'<li class="reveal"><img src="{P}assets/img/cm1-icon-{icon_order[i]:02d}.png" alt="" loading="lazy"><span>{E(t)}</span></li>' for i,t in enumerate(c["features"]))
     spec="".join(f'<tr><th>{E(k)}</th><td>{E(v)}</td></tr>' for k,v in SPEC)
     return f"""
 <section class="cm1-hero" style="background-image:url('{P}assets/img/cm1-hero.jpg')">
@@ -311,26 +339,27 @@ def cm1(L):
 </section>
 <section class="cm1-features">
   <div class="wrap">
-    <img class="wordmark" src="{P}assets/img/cm1-title.png" alt="CM-1" width="184" height="57">
-    <p class="intro">{E(c['p'])}</p>
+    <div class="head reveal">
+      <img class="wordmark" src="{P}assets/img/cm1-title.png" alt="CM-1" width="184" height="57">
+      <p class="intro">{E(c['p']).replace(chr(10),'<br>')}</p>
+    </div>
     <ul class="icons">{feats}</ul>
   </div>
 </section>
 <section class="cm1-gap"></section>
 <section class="cm1-spec" style="background-image:url('{P}assets/img/cm1-product.png')">
   <div class="wrap">
-    <h2>{E(c['spec_title'])}</h2>
-    <table>{spec}</table>
-    <a class="btn-solid" href="contact.html">{E(c['quote'])}</a>
+    <h2 class="reveal">{E(c['spec_title'])}</h2>
+    <table class="reveal">{spec}</table>
+    <a class="btn-outline reveal" href="contact.html">{E(c['quote'])} →</a>
   </div>
 </section>
-<section class="cm1-strip" style="background-image:url('{P}assets/img/cm1-bg.jpg')"></section>
-<section class="cm1-grey"></section>
+<section class="cm1-strip"></section>
 """
 
 def radius(L):
     P=L["prefix"]; c=L["radius"]; ko=L["lang"]=="ko"
-    cards="".join(f'<li><img src="{P}assets/img/radius-feature-{i+1}.jpg" alt="{E(h)}" loading="lazy" width="172" height="285"><div><h3>{E(h)}</h3><p>{E(d)}</p></div></li>' for i,(h,d) in enumerate(c["features"]))
+    cards="".join(f'<li class="reveal"><img src="{P}assets/img/radius-feature-{i+1}.jpg" alt="{E(h)}" loading="lazy" width="172" height="285"><div><h3>{E(h)}</h3><p>{E(d)}</p></div></li>' for i,(h,d) in enumerate(c["features"]))
     return f"""
 <section class="radius-hero">
   <div class="wrap">
@@ -343,8 +372,8 @@ def radius(L):
 </section>
 <section class="radius-features">
   <div class="wrap">
-    <h2>{E(c['kf'])}</h2>
-    <img class="screen" src="{P}assets/img/radius-screen.png" alt="{'RADIUS 로봇 시뮬레이터 및 타임라인 인터페이스' if ko else 'RADIUS robot simulator and timeline interface'}" loading="lazy" width="980" height="553">
+    <h2 class="reveal">{E(c['kf'])}</h2>
+    <img class="screen reveal" src="{P}assets/img/radius-screen.png" alt="{'RADIUS 로봇 시뮬레이터 및 타임라인 인터페이스' if ko else 'RADIUS robot simulator and timeline interface'}" loading="lazy" width="980" height="553">
     <ul class="cards">{cards}</ul>
     <img class="set" src="{P}assets/img/radius-hero.jpg" alt="{'RADIUS로 촬영 중인 현장' if ko else 'On set with RADIUS'}" loading="lazy" width="979" height="677">
   </div>
@@ -393,35 +422,40 @@ def privacy(L):
 """
 
 def form(L, ig_handle, with_subject=True):
+    """Contact form. Field names sit inside the boxes as placeholders; the <label> text stays for screen readers."""
     f=L["contact"]["f"]; subj=L["contact"]["subjects"]
+    def field(name, control, half=False, req=False):
+        ph = E(name) + (" *" if req else "")
+        return (f'<label{" class=\"half\"" if half else ""}><span class="visually-hidden">{ph}</span>'
+                + control.replace("__PH__", ph) + "</label>")
     opts="".join(f'<option>{E(s)}</option>' for s in subj)
-    subject = f"""<label class="half">{E(f['subject'])} *<select name="subject" required><option value="" disabled selected>{E(f['choose'])}</option>{opts}</select></label>""" if with_subject else f"""<label>{E(f['subject'])}<input name="subject"></label>"""
+    subject = (field(f['subject'], f'<select name="subject" required><option value="" disabled selected>__PH__</option>{opts}</select>', half=True, req=True)
+               if with_subject else field(f['subject'], '<input name="subject" placeholder="__PH__">'))
     return f"""
 <form class="contact-form" action="{FORM_ENDPOINT}" method="POST" data-thanks="{E(f['thanks'])}" data-mailto="{EMAIL}">
   <input type="hidden" name="_subject" value="[cineticmotion.com] Contact">
   <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
-  <label class="half">{E(f['name'])} *<input name="name" required></label>
-  <label class="half">{E(f['company'])}<input name="company"></label>
-  <label>{E(f['address'])}<input name="address"></label>
-  <label class="half">{E(f['email'])} *<input type="email" name="email" required></label>
-  <label class="half">{E(f['phone'])}<input type="tel" name="phone"></label>
+  {field(f['name'], '<input name="name" required placeholder="__PH__" autocomplete="name">', half=True, req=True)}
+  {field(f['company'], '<input name="company" placeholder="__PH__" autocomplete="organization">', half=True)}
+  {field(f['address'], '<input name="address" placeholder="__PH__" autocomplete="street-address">')}
+  {field(f['email'], '<input type="email" name="email" required placeholder="__PH__" autocomplete="email">', half=True, req=True)}
+  {field(f['phone'], '<input type="tel" name="phone" placeholder="__PH__" autocomplete="tel">', half=True)}
   {subject}
-  <label>{E(f['msg'])}<textarea name="message" rows="8"></textarea></label>
-  <button type="submit" class="btn">{E(f['submit'])}</button>
+  {field(f['msg'], '<textarea name="message" rows="8" placeholder="__PH__"></textarea>')}
+  <button type="submit" class="btn-outline">{E(f['submit'])}</button>
   <p class="thanks" hidden>{E(f['thanks'])}</p>
 </form>"""
 
 def contact(L):
-    c=L["contact"]
+    P=L["prefix"]; c=L["contact"]
     return f"""
 <section class="contact two-col">
   <div class="contact-info">
     <h1>{E(c['h1'])}</h1>
     <p>{E("로봇촬영 시스템 도입, 렌탈, 데모, 견적을 문의해 주세요." if L["lang"]=="ko" else "Ask us about system purchase, rental, demos and pricing.")}</p>
-    <p><a href="mailto:{EMAIL}">{EMAIL}</a></p>
-    <p><a href="{IG_MAIN}" target="_blank" rel="noopener">{E(c['ig'])}</a></p>
   </div>
-  {form(L, c['ig'])}
+</section>
+<section class="contact-body">{form(L, c['ig'])}
 </section>
 """
 
@@ -436,7 +470,8 @@ def postme(L):
     <p><a href="{IG_MAIN}" target="_blank" rel="noopener">{E(c['ig'])}</a></p>
     <p><a href="{IG_POSTME}" target="_blank" rel="noopener">{E(c['tag'])}</a></p>
   </div>
-  {form(L, c['tag'], with_subject=False)}
+</section>
+<section class="contact-body">{form(L, c['tag'], with_subject=False)}
 </section>
 """
 

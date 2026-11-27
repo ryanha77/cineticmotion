@@ -1,4 +1,17 @@
+document.documentElement.classList.add('js');
+// Reload always starts at the top of the page (browser would otherwise restore the old scroll position).
+if('scrollRestoration' in history){history.scrollRestoration='manual';}
+if(!location.hash){window.scrollTo(0,0);}
 document.addEventListener('DOMContentLoaded',function(){
+  // Scroll reveal: .reveal elements fade in from below when they enter the viewport.
+  var rv=document.querySelectorAll('.reveal');
+  if(rv.length){
+    if('IntersectionObserver' in window){
+      var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.2,rootMargin:'0px 0px -8% 0px'});
+      rv.forEach(function(el){io.observe(el);});
+    } else { rv.forEach(function(el){el.classList.add('in');}); }
+  }
+
   var h=document.querySelector('.site-header'),t=document.querySelector('.nav-toggle');
   if(t){t.addEventListener('click',function(){var o=h.classList.toggle('open');t.setAttribute('aria-expanded',o);});}
 
